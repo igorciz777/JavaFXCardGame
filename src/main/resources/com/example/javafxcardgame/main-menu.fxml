@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+    alignment="CENTER"
+    fx:controller="com.example.javafxcardgame.MainController"
+    style="-fx-background-color:#519e79"
+    >
+    <Label
+            text="Java FX Card Game"
+            alignment="CENTER"
+            style="-fx-font-size:40px"
+    />
+    <HBox
+        alignment="CENTER"
+        >
+        <Label
+            text="How many decks of cards?"
+            alignment="CENTER"
+            />
+        <TextField
+            alignment="CENTER"
+            />
+    </HBox>
+    <Button
+        fx:id="startButton"
+        text="Start Game"
+        alignment="CENTER"
+        onAction="#startGame"
+        />
+</VBox>
