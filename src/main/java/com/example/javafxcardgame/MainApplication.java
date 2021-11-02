@@ -79,6 +79,7 @@ public class MainApplication extends Application {
         }
     }
     public void quit(){
+        //TODO different view | dialog
         System.out.println("---------------------------------------------------------------------------");
         System.out.println("Game Over!");
         System.out.println("Money: "+getPlayerMoney());
@@ -159,6 +160,8 @@ public class MainApplication extends Application {
                 .sum();
     }
     private void printInfo(){
+        //TODO change to text on screen
+        //TODO set proper image size
         dealerCardList.forEach(card -> dealerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage()))));
         //System.out.println("Total value: " + getDealerValue());
         playerCardList.forEach(card -> playerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage()))));
@@ -201,6 +204,7 @@ public class MainApplication extends Application {
         }
     }
     private void checkWin(){
+        //TODO display as dialog | different view
         if(getPlayerValue() > 21 || (getPlayerValue() < getDealerValue() && getDealerValue() <= 21)){
             System.err.println("You lose!");
             loseCounter++;
@@ -218,6 +222,7 @@ public class MainApplication extends Application {
         checkIfShuffle();
         printInfo();
         System.out.println("STAND,HIT or QUIT game?");
+        //TODO change to buttons
         switch (scanner.next().toUpperCase()) {
             case "STAND":
                 playerStand();
