@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.net.URL;
 
 public class DeckService {
-    private String url;
-    private int deckCount;
+    private final String url;
+    private final int deckCount;
 
     DeckService(int deckCount){
         this.deckCount = deckCount;
@@ -36,7 +36,7 @@ public class DeckService {
 
         for(Object obj : jsonArray){
             JSONObject jsonObject = (JSONObject) obj;
-            Card card = new Card(jsonObject.get("code").toString(), jsonObject.get("value").toString(),jsonObject.get("suit").toString());
+            Card card = new Card(jsonObject.get("code").toString(), jsonObject.get("value").toString(),jsonObject.get("suit").toString(),jsonObject.get("image").toString());
             deck.saveToDeck(card);
         }
         return deck;

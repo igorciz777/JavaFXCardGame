@@ -4,11 +4,13 @@ public class Card {
     private String code;
     private String value;
     private String suit;
+    private String image;
 
-    Card(String code, String value, String suit){
+    Card(String code, String value, String suit, String image){
         this.code = code;
         this.value = value;
         this.suit = suit;
+        this.image = image;
     }
 
     public String getCode() {
@@ -34,6 +36,9 @@ public class Card {
                 return Integer.parseInt(value);
 
         }
+    }
+    public String getImage(){
+        return image;
     }
 
     public void setValue(String value) {
