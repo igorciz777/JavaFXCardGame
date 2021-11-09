@@ -2,14 +2,14 @@ package com.example.javafxcardgame;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -18,8 +18,6 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.Scanner;
 
 public class MainApplication extends Application {
     Stage stage;
@@ -28,12 +26,17 @@ public class MainApplication extends Application {
     private DeckService deckService;
     private CardDeck deck;
     private int counter;
-    private final Scanner scanner = new Scanner(System.in);
     private List<Card> playerCardList;
     private List<Card> dealerCardList;
     private HBox dealerCardsHBox;
     private HBox playerCardsHBox;
     private Text moneyText;
+    private Text playerValue;
+    private Text dealerValue;
+    private Text cardCount;
+    private Button standButton;
+    private Button hitButton;
+    private Button quitButton;
     private int playerMoney;
     private int playerBet;
     private int roundCounter=0;
@@ -72,21 +75,30 @@ public class MainApplication extends Application {
     }
     public boolean checkField(TextField textField){
         try{
-            int num = Integer.parseInt(textField.getText());
+            Integer.parseInt(textField.getText());
             return true;
         }catch (Exception e){
             return false;
         }
     }
-    public void quit(){
-        //TODO different view | dialog
-        System.out.println("---------------------------------------------------------------------------");
-        System.out.println("Game Over!");
-        System.out.println("Money: "+getPlayerMoney());
-        System.out.println("Rounds played: "+roundCounter);
-        System.out.println("Rounds won: "+winCounter);
-        System.out.println("Rounds lost: "+loseCounter);
-        System.out.println("---------------------------------------------------------------------------");
+    public void quit() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("game-over.fxml"));
+        Parent parent = fxmlLoader.load();
+        mainController = fxmlLoader.getController();
+
+        mainController.getEndMoney().setText("Money: "+getPlayerMoney());
+        mainController.getRoundsPlayed().setText("Rounds played: "+roundCounter);
+        mainController.getRoundsWon().setText("Rounds won: "+winCounter);
+        mainController.getRoundsLost().setText("Rounds lost: "+loseCounter);
+        mainController.getResetButton().setOnAction(actionEvent -> {
+            try {
+                start(stage);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        stage.setScene(new Scene(parent,800,800));
     }
     private void startNewGame(int deckCount) throws IOException, ParseException {
         deckService = new DeckService(deckCount);
@@ -103,7 +115,7 @@ public class MainApplication extends Application {
         playerCardsHBox.getChildren().clear();
         dealerCardsHBox.getChildren().clear();
     }
-    private void startRound(int bet){
+    private void startRound(int bet) throws IOException {
         roundCounter++;
         clearLists();
         playerBet = bet;
@@ -118,7 +130,7 @@ public class MainApplication extends Application {
             checkWin();
         }else{continueRound();}
     }
-    private void playerHit(){
+    private void playerHit() throws IOException {
         checkIfShuffle();
         playerCardList.add(drawCard());
         if(getPlayerValue() >= 21){
@@ -128,15 +140,18 @@ public class MainApplication extends Application {
             continueRound();
         }
     }
-    private void playerStand(){
+    private void playerStand() throws IOException {
         if(getPlayerValue() <= getDealerValue()){
-            System.err.println("Cant stand");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setHeaderText("Warning!");
+            alert.setContentText("Can't Stand! Hitting instead...");
+            alert.showAndWait();
             playerHit();
         }else {
             dealerHit();
         }
     }
-    private void dealerHit(){
+    private void dealerHit() throws IOException {
         checkIfShuffle();
         dealerCardList.add(drawCard());
         printInfo();
@@ -160,14 +175,14 @@ public class MainApplication extends Application {
                 .sum();
     }
     private void printInfo(){
-        //TODO change to text on screen
-        //TODO set proper image size
-        dealerCardList.forEach(card -> dealerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage()))));
-        //System.out.println("Total value: " + getDealerValue());
-        playerCardList.forEach(card -> playerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage()))));
-        //System.out.println("Total value: " +  + getPlayerValue());
+        dealerCardsHBox.getChildren().clear();
+        playerCardsHBox.getChildren().clear();
+        dealerCardList.forEach(card -> dealerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage(),250,250,true,false))));
+        dealerValue.setText("Cards value: " + getDealerValue());
+        playerCardList.forEach(card -> playerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage(),250,250,true,false))));
+        playerValue.setText("Cards value: " + getPlayerValue());
         moneyText.setText("Your money: " + getPlayerMoney());
-        //System.out.println("Cards in deck remaining: " + (deck.getCardDeckList().size() - counter));
+        cardCount.setText("Cards in deck remaining: " + (deck.getCardDeckList().size() - counter));
     }
 
     public int getPlayerMoney() {
@@ -177,14 +192,17 @@ public class MainApplication extends Application {
     public void setPlayerMoney(int playerMoney) {
         this.playerMoney = playerMoney;
     }
-    public int getPlayerBet(){
+    public int getPlayerBet() throws IOException {
         TextInputDialog inputDialog = new TextInputDialog("Enter a number");
         inputDialog.setHeaderText("How much money do you want to bet?");
         inputDialog.setContentText("Your money: " + playerMoney);
         inputDialog.showAndWait();
+        if(inputDialog.getResult() == null){
+            quit();
+        }
         return Integer.parseInt(inputDialog.getEditor().getText());
     }
-    private void canContinue(){
+    private void canContinue() throws IOException {
         if(getPlayerMoney() > 0){
             startRound(getPlayerBet());
         }
@@ -194,7 +212,10 @@ public class MainApplication extends Application {
     }
     private void checkIfShuffle() {
         if((deck.getCardDeckList().size() - counter) <= 4){
-            System.out.println("Reshuffling the deck!");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("Warning!");
+            alert.setContentText("Reshuffling the deck!");
+            alert.showAndWait();
             counter=0;
             try {
                 deck = deckService.reshuffleDeck();
@@ -203,41 +224,48 @@ public class MainApplication extends Application {
             }
         }
     }
-    private void checkWin(){
-        //TODO display as dialog | different view
+    private void checkWin() throws IOException {
         if(getPlayerValue() > 21 || (getPlayerValue() < getDealerValue() && getDealerValue() <= 21)){
-            System.err.println("You lose!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("You lose the round!");
             loseCounter++;
-            System.out.println("Your money: "+getPlayerMoney());
+            alert.setContentText("Your money: "+getPlayerMoney());
+            alert.showAndWait();
         }
         else if(getPlayerValue() == 21 || getDealerValue() > 21 || getPlayerValue() > getDealerValue()){
-            System.out.println("You win!");
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setHeaderText("You win the round!");
             winCounter++;
             playerMoney += playerBet * 2;
-            System.out.println("Your money: "+getPlayerMoney());
+            alert.setContentText("Your money: "+getPlayerMoney());
+            alert.showAndWait();
         }
         canContinue();
     }
     private void continueRound() {
         checkIfShuffle();
         printInfo();
-        System.out.println("STAND,HIT or QUIT game?");
-        //TODO change to buttons
-        switch (scanner.next().toUpperCase()) {
-            case "STAND":
+        standButton.setOnAction(actionEvent -> {
+            try {
                 playerStand();
-                break;
-            case "HIT":
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        hitButton.setOnAction(actionEvent -> {
+            try {
                 playerHit();
-                break;
-            case "QUIT":
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        quitButton.setOnAction(actionEvent -> {
+            try {
                 quit();
-                break;
-            default:
-                System.out.println("Wrong option, try again");
-                continueRound();
-                break;
-        }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
     private void changeView() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainApplication.class.getResource("game-view.fxml"));
@@ -246,6 +274,12 @@ public class MainApplication extends Application {
         dealerCardsHBox = mainController.getDealerCardsHBox();
         playerCardsHBox = mainController.getYourCardsHBox();
         moneyText = mainController.getMoneyText();
+        playerValue = mainController.getPlayerValue();
+        dealerValue = mainController.getDealerValue();
+        cardCount = mainController.getCardCount();
+        standButton = mainController.getStandButton();
+        hitButton = mainController.getHitButton();
+        quitButton = mainController.getQuitButton();
         stage.setScene(new Scene(parent,800,800));
     }
 }

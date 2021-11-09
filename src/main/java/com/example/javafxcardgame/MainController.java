@@ -1,18 +1,11 @@
 package com.example.javafxcardgame;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class MainController {
     @FXML
@@ -31,34 +24,26 @@ public class MainController {
     public HBox dealerCardsHBox;
     @FXML
     public HBox yourCardsHBox;
+    public Text playerValue;
+    public Text dealerValue;
+    public Text cardCount;
+    public Button standButton;
+    public HBox buttonHBox;
+    public Button hitButton;
+    public Button quitButton;
+    public Text endMoney;
+    public Text roundsPlayed;
+    public Text roundsWon;
+    public Text roundsLost;
+    public Button resetButton;
 
 
     public void initialize(){
 
     }
 
-    public Button getStartButton() {
-        return startButton;
-    }
-
-    public TextField getDeckNumField() {
-        return deckNumField;
-    }
-
-    public VBox getOpponentHBox() {
-        return opponentHBox;
-    }
-
-    public VBox getPlayerHBox() {
-        return playerHBox;
-    }
-
     public Text getMoneyText() {
         return moneyText;
-    }
-
-    public Text getErrorText() {
-        return errorText;
     }
 
     public HBox getDealerCardsHBox() {
@@ -67,5 +52,49 @@ public class MainController {
 
     public HBox getYourCardsHBox() {
         return yourCardsHBox;
+    }
+
+    public Text getPlayerValue() {
+        return playerValue;
+    }
+
+    public Text getDealerValue() {
+        return dealerValue;
+    }
+
+    public Text getCardCount() {
+        return cardCount;
+    }
+
+    public Button getStandButton() {
+        return standButton;
+    }
+
+    public Button getHitButton() {
+        return hitButton;
+    }
+
+    public Button getQuitButton() {
+        return quitButton;
+    }
+
+    public Text getEndMoney() {
+        return endMoney;
+    }
+
+    public Text getRoundsPlayed() {
+        return roundsPlayed;
+    }
+
+    public Text getRoundsWon() {
+        return roundsWon;
+    }
+
+    public Text getRoundsLost() {
+        return roundsLost;
+    }
+
+    public Button getResetButton() {
+        return resetButton;
     }
 }

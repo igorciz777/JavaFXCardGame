@@ -3,6 +3,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Button?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.javafxcardgame.MainController"
@@ -19,6 +20,10 @@
         >
 
         </HBox>
+        <Text
+                fx:id="dealerValue"
+                text="Cards value:"
+            />
     </VBox>
     <VBox
         fx:id="playerHBox"
@@ -32,8 +37,32 @@
 
         </HBox>
         <Text
+            fx:id="playerValue"
+            text="Cards value:"
+            />
+        <Text
             fx:id="moneyText"
             text="Money:"
             />
     </VBox>
+    <Text
+            fx:id="cardCount"
+        text="Cards in deck remaining:"
+        />
+    <HBox
+        fx:id="buttonHBox"
+        alignment="BASELINE_CENTER">
+        <Button
+            fx:id="standButton"
+            text="STAND"
+            />
+        <Button
+            fx:id="hitButton"
+            text="HIT"
+            />
+        <Button
+            fx:id="quitButton"
+            text="QUIT"
+            />
+    </HBox>
 </VBox>
