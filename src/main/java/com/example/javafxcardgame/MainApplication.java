@@ -50,6 +50,7 @@ public class MainApplication extends Application {
         mainController = fxmlLoader.getController();
 
         scene = new Scene(fxmlLoader.load(), 800, 800);
+        scene.getStylesheets().add( getClass().getResource("style.css").toExternalForm() );
 
         stage.setTitle("Blackjack");
         stage.setScene(scene);
@@ -97,8 +98,9 @@ public class MainApplication extends Application {
                 e.printStackTrace();
             }
         });
-
-        stage.setScene(new Scene(parent,800,800));
+        Scene quitScene = new Scene(parent,800,800);
+        quitScene.getStylesheets().add( getClass().getResource("style.css").toExternalForm() );
+        stage.setScene(quitScene);
     }
     private void startNewGame(int deckCount) throws IOException, ParseException {
         deckService = new DeckService(deckCount);
@@ -280,6 +282,8 @@ public class MainApplication extends Application {
         standButton = mainController.getStandButton();
         hitButton = mainController.getHitButton();
         quitButton = mainController.getQuitButton();
-        stage.setScene(new Scene(parent,800,800));
+        Scene gameScene = new Scene(parent,800,800);
+        gameScene.getStylesheets().add( getClass().getResource("style.css").toExternalForm() );
+        stage.setScene(gameScene);
     }
 }

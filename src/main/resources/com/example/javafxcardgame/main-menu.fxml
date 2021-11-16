@@ -9,12 +9,12 @@
 <VBox xmlns:fx="http://javafx.com/fxml"
       alignment="CENTER"
       fx:controller="com.example.javafxcardgame.MainController"
-      style="-fx-background-color:#519e79"
+      styleClass="mainVbox"
     >
     <Label
             text="Java FX Card Game"
             alignment="CENTER"
-            style="-fx-font-size:40px"
+            styleClass="mainLabel"
     />
     <HBox
         alignment="CENTER"
@@ -35,5 +35,9 @@
         />
     <Text
         fx:id="errorText"
+        />
+    <Label
+            styleClass="authorText"
+        text="Author: Igor Ciżewski"
         />
 </VBox>
