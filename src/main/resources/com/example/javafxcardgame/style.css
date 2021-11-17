@@ -1,5 +1,5 @@
 VBox,HBox{
-    -fx-background-color:#519e79;
+    -fx-background-color:#8EBD99;
 }
 .mainVbox{
     -fx-padding:10px;
@@ -17,6 +17,7 @@ VBox,HBox{
 .dealerCardsText,.playerCardsText{
     -fx-font-size:20px;
     -fx-font-weight:bold;
+    -fx-text-fill: white;
 }
 .hr{
     -fx-background-color:#000000;
@@ -26,4 +27,39 @@ VBox,HBox{
 }
 .moneyText{
     -fx-font-size:15px;
+    -fx-text-fill:white;
+    -fx-font-weight:bold;
+}
+.playerHBox, .dealerHBox{
+    -fx-background-color: #469459;
+    -fx-padding: 20px;
+    -fx-border-style: solid inside;
+    -fx-border-width: 2;
+    -fx-border-insets: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: black;
+    -fx-background-radius: 5;
+    -fx-background-insets: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
+}
+HBox ImageView{
+    -fx-alignment: center;
+}
+.dealerVBox, .playerVBox{
+    -fx-background-color: #519C64;
+    -fx-border-style: solid inside;
+    -fx-border-width: 1;
+    -fx-border-insets: 5;
+    -fx-border-radius: 5;
+    -fx-border-color: black;
+    -fx-background-radius: 5;
+    -fx-background-insets: 5;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0.0, 0.0);
+}
+.errorText{
+    -fx-text-fill:red;
+    -fx-font-size:20px;
+}
+Button{
+    -fx-view-order:10;
 }

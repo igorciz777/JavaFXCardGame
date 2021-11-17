@@ -2,6 +2,7 @@ package com.example.javafxcardgame;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -17,9 +18,9 @@ public class MainController {
     @FXML
     public VBox playerHBox;
     @FXML
-    public Text moneyText;
+    public Label moneyText;
     @FXML
-    public Text errorText;
+    public Label errorText;
     @FXML
     public HBox dealerCardsHBox;
     @FXML
@@ -42,7 +43,7 @@ public class MainController {
 
     }
 
-    public Text getMoneyText() {
+    public Label getMoneyText() {
         return moneyText;
     }
 

@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 <VBox xmlns:fx="http://javafx.com/fxml"
       alignment="CENTER"
       fx:controller="com.example.javafxcardgame.MainController"
@@ -20,7 +17,7 @@
         alignment="CENTER"
         >
         <Label
-            text="How many decks of cards?"
+            text="How many decks of cards?(1-20)"
             alignment="CENTER"
             />
         <TextField
@@ -30,11 +27,13 @@
     </HBox>
     <Button
         fx:id="startButton"
+        styleClass="startButton"
         text="Start Game"
         alignment="CENTER"
         />
-    <Text
+    <Label
         fx:id="errorText"
+        styleClass="errorText"
         />
     <Label
             styleClass="authorText"

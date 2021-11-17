@@ -4,10 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -18,6 +15,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainApplication extends Application {
     Stage stage;
@@ -30,7 +28,7 @@ public class MainApplication extends Application {
     private List<Card> dealerCardList;
     private HBox dealerCardsHBox;
     private HBox playerCardsHBox;
-    private Text moneyText;
+    private Label moneyText;
     private Text playerValue;
     private Text dealerValue;
     private Text cardCount;
@@ -50,7 +48,7 @@ public class MainApplication extends Application {
         mainController = fxmlLoader.getController();
 
         scene = new Scene(fxmlLoader.load(), 800, 800);
-        scene.getStylesheets().add( getClass().getResource("style.css").toExternalForm() );
+        scene.getStylesheets().add( Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm() );
 
         stage.setTitle("Blackjack");
         stage.setScene(scene);
@@ -58,9 +56,9 @@ public class MainApplication extends Application {
 
         Button startButton = (Button) scene.lookup("#startButton");
         TextField textField = (TextField) scene.lookup("#deckNumField");
-        Text errorText = (Text) scene.lookup("#errorText");
+        Label errorText = (Label) scene.lookup("#errorText");
         startButton.setOnAction(actionEvent -> {
-            if(checkField(textField)){
+            if(checkField(textField) && 0 < Integer.parseInt(textField.getText()) && Integer.parseInt(textField.getText()) < 21){
                 try {
                     startNewGame(Integer.parseInt(textField.getText()));
                     changeView();
@@ -70,7 +68,6 @@ public class MainApplication extends Application {
                 }
             }else {
                 errorText.setText("Enter correct number of decks!");
-                errorText.setStyle("-fx-font-size:20px");
             }
         });
     }
@@ -99,7 +96,7 @@ public class MainApplication extends Application {
             }
         });
         Scene quitScene = new Scene(parent,800,800);
-        quitScene.getStylesheets().add( getClass().getResource("style.css").toExternalForm() );
+        quitScene.getStylesheets().add( Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm() );
         stage.setScene(quitScene);
     }
     private void startNewGame(int deckCount) throws IOException, ParseException {
@@ -179,9 +176,9 @@ public class MainApplication extends Application {
     private void printInfo(){
         dealerCardsHBox.getChildren().clear();
         playerCardsHBox.getChildren().clear();
-        dealerCardList.forEach(card -> dealerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage(),250,250,true,false))));
+        dealerCardList.forEach(card -> dealerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage(),200,200,true,false))));
         dealerValue.setText("Cards value: " + getDealerValue());
-        playerCardList.forEach(card -> playerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage(),250,250,true,false))));
+        playerCardList.forEach(card -> playerCardsHBox.getChildren().add(new ImageView(new Image(card.getImage(),200,200,true,false))));
         playerValue.setText("Cards value: " + getPlayerValue());
         moneyText.setText("Your money: " + getPlayerMoney());
         cardCount.setText("Cards in deck remaining: " + (deck.getCardDeckList().size() - counter));
@@ -283,7 +280,7 @@ public class MainApplication extends Application {
         hitButton = mainController.getHitButton();
         quitButton = mainController.getQuitButton();
         Scene gameScene = new Scene(parent,800,800);
-        gameScene.getStylesheets().add( getClass().getResource("style.css").toExternalForm() );
+        gameScene.getStylesheets().add( Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm() );
         stage.setScene(gameScene);
     }
 }

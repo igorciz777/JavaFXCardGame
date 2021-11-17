@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Text?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Label?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.javafxcardgame.MainController"
-      style="-fx-background-color:#519e79"
             >
     <VBox
         fx:id="opponentHBox"
+        styleClass="dealerVBox"
         alignment="TOP_CENTER">
-        <Text
+        <Label
             text="Dealer cards"
             styleClass="dealerCardsText"
             />
         <HBox
         fx:id="dealerCardsHBox"
+        styleClass="dealerHBox"
         >
 
         </HBox>
@@ -28,18 +28,17 @@
                 styleClass="dealerValue"
             />
     </VBox>
-    <Separator
-        styleClass="hr"
-    />
     <VBox
         fx:id="playerHBox"
+        styleClass="playerVBox"
         alignment="BOTTOM_CENTER">
-        <Text
+        <Label
             text="Your cards"
             styleClass="playerCardsText"
             />
         <HBox
                 fx:id="yourCardsHBox"
+                styleClass="playerHBox"
         >
 
         </HBox>
@@ -48,15 +47,12 @@
             text="Cards value:"
             styleClass="playerValue"
             />
-        <Text
+        <Label
             fx:id="moneyText"
             text="Money:"
             styleClass="moneyText"
             />
     </VBox>
-    <Separator
-            styleClass="hr"
-    />
     <Text
             fx:id="cardCount"
         text="Cards in deck remaining:"
